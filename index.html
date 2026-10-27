@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বাংলাদেশ ট্রোল ও ভাইব সার্টিফিকেশন ব্যুরো (আল্টিমেট ভার্সন)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Bangla) -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas for Image Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-rose-500 selection:text-white">
+
+    <!-- Top Notice Bar -->
+    <div class="bg-rose-700 text-white text-sm py-2 px-4 shadow-md overflow-hidden relative flex items-center">
+        <div class="bg-rose-900 px-3 py-1 font-bold z-10 shrink-0 flex items-center gap-1 shadow-inner">
+            <i class="fa-solid fa-bullhorn animate-bounce"></i> জরুরি ঘোষণা:
+        </div>
+        <div class="overflow-hidden whitespace-nowrap w-full">
+            <div class="animate-marquee inline-block font-medium">
+                🚨 ব্রেকিং নিউজ: কচি শিশু ও টোকাই ক্যাটাগরিতে বিশেষ বয়স্ক ভাতা চালু হয়েছে! ⚠️ বাংলা টেসলাচালকরা সিগন্যাল ছাড়াই ব্রেক ফেল করায় জনমনে আতঙ্ক। ⚡ এখনই আপনার রিয়েল সার্টিফিকেট সংগ্রহ করুন!
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 shadow-lg">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="resetApp()">
+                <div class="bg-emerald-600 text-white p-3 rounded-full shadow-lg">
+                    <i class="fa-solid fa-stamp text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight text-emerald-400">বাংলাদেশ ট্রোল ও ভাইব সার্টিফিকেশন ব্যুরো</h1>
+                    <p class="text-xs text-slate-400">গণপ্রজাতন্ত্রী ট্রোলল্যান্ড সরকার (সর্ববৃহৎ ভুয়া প্রতিষ্ঠান)</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-900 px-4 py-2 rounded-xl border border-slate-700 text-xs md:text-sm">
+                <div><i class="fa-solid fa-users text-emerald-400"></i> মোট সার্টিফাইড ভিক্টিম: <span id="headerCounter" class="font-bold text-emerald-400">৯৯,৯৯৯</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto w-full p-4 md:p-6 my-6 flex-grow">
+
+        <!-- STEP 1: Categories -->
+        <section id="categorySection" class="space-y-6">
+            <div class="text-center space-y-2 mb-8">
+                <h2 class="text-2xl md:text-4xl font-bold text-slate-100">আজকে আপনি কোন ক্যাটাগরির ভিক্টিম হতে চান?</h2>
+                <p class="text-slate-400 text-sm">আপনার পছন্দের পেশা বা ক্যাটাগরি সিলেক্ট করে কুইজ দিন এবং সার্টিফিকেট নিন!</p>
+            </div>
+            <div id="categoryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+        </section>
+
+        <!-- STEP 2: Quiz -->
+        <section id="quizSection" class="hidden space-y-6 bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl max-w-2xl mx-auto">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+                <button onclick="resetApp()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-700 px-3 py-1.5 rounded-lg">
+                    <i class="fa-solid fa-arrow-left"></i> পেছনে যান
+                </button>
+                <div id="quizProgress" class="text-sm font-semibold text-emerald-400">প্রশ্ন ১ / ২</div>
+            </div>
+            <div id="questionContainer" class="space-y-4"></div>
+        </section>
+
+        <!-- STEP 3: Result & Certificate -->
+        <section id="resultSection" class="hidden space-y-6 text-center">
+            <div class="bg-emerald-900/30 border border-emerald-500/50 p-4 rounded-xl text-sm max-w-2xl mx-auto">
+                অভিনন্দন! আপনার মস্তিষ্ক সফলভাবে ধোলাই করা হয়েছে এবং অফিশিয়াল সার্টিফিকেট রেডি।
+            </div>
+
+            <!-- Certificate Card -->
+            <div id="certificateCard" class="bg-amber-50 text-slate-900 p-8 rounded-2xl shadow-2xl border-8 border-amber-600 relative overflow-hidden mx-auto max-w-2xl text-left">
+                <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                    <i class="fa-solid fa-stamp text-[200px]"></i>
+                </div>
+
+                <div class="border-b-2 border-amber-800 pb-4 mb-6 flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-amber-900 text-base md:text-lg uppercase">বাংলাদেশ ট্রোল ও ভাইব বোর্ড</h3>
+                        <p class="text-xs text-amber-700">গণপ্রজাতন্ত্রী ট্রোলল্যান্ড সরকার</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="bg-amber-800 text-white text-xs px-3 py-1 rounded font-mono">ID: #ULTIMATE-2026</div>
+                    </div>
+                </div>
+
+                <div class="text-center space-y-2 my-6">
+                    <h4 class="text-xs md:text-sm uppercase tracking-widest text-amber-800 font-bold">অফিসিয়াল সার্টিফিকেট অব অ্যাচিভমেন্ট</h4>
+                    <p class="text-xs text-slate-600">এই মর্মে প্রত্যয়ন করা যাচ্ছে যে,</p>
+                    <h2 id="certUserName" class="text-2xl md:text-3xl font-extrabold text-amber-950 underline decoration-amber-600 decoration-wavy underline-offset-8 py-2">জনাব/জনাবা [নাম]</h2>
+                    <p id="certCategoryTitle" class="text-xs md:text-sm text-slate-700 font-medium pt-2">সফলভাবে মেন্টাল টেস্ট পাস করে স্পেশাল ক্যাটাগরিতে ভূষিত হয়েছেন।</p>
+                </div>
+
+                <div class="bg-amber-100/70 p-4 rounded-lg border border-amber-300 text-xs text-slate-700 my-4">
+                    <p><strong>বিশেষ ঘোষণা/মন্তব্য:</strong> <span id="certSpecialMessage">এই সার্টিফিকেটের কোনো আইনি ভিত্তি নেই, সম্পূর্ণ ফানি ও মিম উদ্দেশ্যে ব্যবহৃত হবে।</span></p>
+                </div>
+
+                <div class="flex justify-between items-end pt-8 mt-6 border-t border-amber-300 text-xs">
+                    <div>
+                        <p class="font-bold text-amber-900">তারিখ: <span id="certDate">26 October 2026</span></p>
+                        <p class="text-slate-500">ইস্যুকারী: চিফ রোস্টিং অফিসার</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 border-2 border-dashed border-amber-800 rounded-full flex items-center justify-center mx-auto mb-1 text-[10px] text-amber-900 font-bold rotate-12">
+                            ULTIMATE VIBE
+                        </div>
+                        <p class="font-bold text-amber-900">সীলমোহর ও স্বাক্ষর</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 pt-4">
+                <button onclick="downloadCertificateImage()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> সার্টিফিকেট ডাউনলোড করুন
+                </button>
+                <button onclick="shareOnFacebook()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                    <i class="fa-brands fa-facebook"></i> ফেসবুকে ফ্লেক্স করুন
+                </button>
+                <button onclick="resetApp()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> আবার ট্রাই করুন
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
+        <p>© ২০২৬ বাংলাদেশ ট্রোল ও ভাইব সার্টিফিকেশন ব্যুরো। সব অধিকার সম্পূর্ণ ভুয়া ও বানোয়াট।</p>
+    </footer>
+
+    <!-- Name Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-md w-full space-y-4 shadow-2xl">
+            <h3 class="text-xl font-bold text-emerald-400"><i class="fa-solid fa-id-card"></i> আপনার নাম বা উপাধি লিখুন</h3>
+            <p class="text-xs text-slate-300">সার্টিফিকেটে আপনার কোন নামে সিল মারা হবে?</p>
+            <input type="text" id="inputUserName" placeholder="যেমন: ধান্দাবাজ সম্রাট / মিয়া ভাই" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-emerald-500">
+            <button onclick="generateCertificateFinal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg transition">
+                সার্টিফিকেট তৈরি করুন <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Script -->
+    <script>
+        const categoriesData = {
+            shahbagee: {
+                title: "শাহবাগী",
+                icon: "fa-fire-flame-curved",
+                color: "from-rose-600 to-red-800",
+                questions: [
+                    {
+                        q: "শেষ কবে বগলের চুল কেটেছেন",
+                        options: ["কেন আমি চুল বাল কাটমু কেন রবিন্দ্রনাথ ঠাকুর কাটত", "গোসল করারই সময় পাইনা বাল কাটমু কখন", "শেষ কবে কেটেই বা লাভ কী, দেশ তো বাঙ্গু,গঙ্গিদের হাতে চলে গিয়ে দেশ হলো আফগানস্থান "]
+                    }
+                ]
+            },
+
+
+            jamati: {
+                title: "জামাতি ",
+                icon: "fa-book-open-reader",
+                color: "from-emerald-600 to-teal-800",
+                questions: [
+                    {
+                        q: "আপনি কেন জামাতে ইসলামকেই বেছে নিলেন",
+                        options: ["ধুর বাল! ", "সব দোষ আম তারেকের", "আমি শুধু জিলাপির জন্য আসি"]
+                    }
+                ]
+            },
+            huzur: {
+                title: "হুজুর",
+                icon: "fa-mosque",
+                color: "from-cyan-600 to-blue-800",
+                questions: [
+                    {
+                        q: "ফেসবুকে পরিমনির  রিলস দেখলে আপনার আঙুল কি  অজান্তেই আউযুবিল্লাহ পড়তে থাকে?",
+                        options: ["চাচ্ছি গলির মোড়ে একটা মাদ্রাসা খুলতে কিছু ডোনেশন দরকার", "সওয়াবের নিয়তে জাস্ট লাস্টের এক সেকেন্ড দেখি", "তওবা তওবা কমেন্ট করি"]
+                    }
+                ]
+            },
+            bnp: {
+                title: "বিএনপি কর্মী",
+                icon: "fa-flag",
+                color: "from-blue-600 to-indigo-800",
+                questions: [
+                    {
+                        q: "মিছিলে পুলিশের লাঠিচার্জ খেয়ে 'নেতা কোথায়' বলে স্লোগান দেওয়ার রেকর্ড আছে?",
+                        options: ["আমি ফ্রন্টলাইনে ছিলাম, লাঠির বাড়িও খাইছি", "ক্যামেরার ফ্রেমে থাকার জন্য একটু পেছনে ছিলাম", "মিছিলের আগেই চা খাওয়ার উছিলায় পলায়ন"]
+                    }
+                ]
+            },
+            peerbaba: {
+                title: "পীর বাবা",
+                icon: "fa-hat-wizard",
+                color: "from-purple-600 to-fuchsia-800",
+                questions: [
+                    {
+                        q: "মুরিদের পকেট থেকে মানিব্যাগ সরানোর সময় হাতের স্পিড কত এফপিএস হওয়া উচিত?",
+                        options: ["ম্যাজিকের চেয়েও দ্রুতগতির", "ভক্ত নিজেই সানন্দে বের করে দেবে", "মানিব্যাগ না পেলে তাবিজ বিক্রি করব"]
+                    }
+                ]
+            },
+            leader: {
+                title: "নেতা মহোদয়",
+                icon: "fa-user-tie",
+                color: "from-amber-600 to-orange-800",
+                questions: [
+                    {
+                        q: "ইফতার পার্টিতে রোস্টের টুকরো ছোট পেলে আপনার চোখের দৃষ্টি কেমন হয়?",
+                        options: ["কমিটি ভেঙে দেওয়ার হুমকি দৃষ্টি", "গরীবের হক মারবেন না টাইপ বক্তব্য", "পাশের জনের প্লেট থেকে সাইজ বড়টা টোকা দেওয়া"]
+                    }
+                ]
+            },
+            rickshaw: {
+                title: "রিকশাওয়ালা",
+                icon: "fa-bicycle",
+                color: "from-yellow-600 to-amber-800",
+                questions: [
+                    {
+                        q: "সামনে জ্যাম দেখলে যাত্রীকে কী বলে প্যাডেলের গতি দ্বিগুণ করেন?",
+                        options: ["আয় মামী ফ্লাইওভার দিয়ে যাই!", "সামনে ট্রাফিক পুলিশ দেখলেই ইউ-টার্ন", "ভাই একটু নামেন চড়াই পার করতে হবে"]
+                    }
+                ]
+            },
+            tokai: {
+                title: "টোকাই",
+                icon: "fa-box-open",
+                color: "from-stone-600 to-neutral-800",
+                questions: [
+                    {
+                        q: "প্লাস্টিকের বোতল কুড়ানোর সময় আপনার প্রধান প্রতিদ্বন্দ্বী কে?",
+                        options: ["পাশের গলির খেঁকশেয়াল্লু কালু", "সিটি কর্পোরেশনের ভ্যান গাড়ি", "আমি একাই এলাকার সব কুড়িয়ে নিই"]
+                    }
+                ]
+            },
+            dhandabaz: {
+                title: "ধান্দাবাজ",
+                icon: "fa-hand-holding-dollar",
+                color: "from-lime-600 to-green-800",
+                questions: [
+                    {
+                        q: "আজকে কার কার পকেট থেকে ক্যাশ মারার ধান্দায় আছেন?",
+                        options: ["সরকার ও বিরোধী দল উভয়ই টার্গেটে আছে", "আগে নিজে বাঁচি, পরে ধান্দা", "সুযোগ পেলেই ইউটার্ন নেব"]
+                    }
+                ]
+            },
+            dalal: {
+                title: "প্রফেশনাল দালাল",
+                icon: "fa-handshake",
+                color: "from-orange-600 to-red-900",
+                questions: [
+                    {
+                        q: "দুই পক্ষের মধ্যস্থতা করার সময় কমিশন পার্সেন্টেজ কত রাখেন?",
+                        options: ["ন্যূনতম ৫০% ক্যাশ এডভান্স", "ভাই আমি দেশপ্রেমিক, শুধু ইজ্জত নিই", "দুই পক্ষকেই ভুল বুঝিয়ে ডাবল কামাই"]
+                    }
+                ]
+            },
+            pagol: {
+                title: "এলাকার পাগল",
+                icon: "fa-brain",
+                color: "from-pink-600 to-rose-900",
+                questions: [
+                    {
+                        q: "রাস্তায় বিড়াল দেখলে আপনি তাকে কী বলে সম্বোধন করেন?",
+                        options: ["ওহে আমেরিকার প্রেসিডেন্ট কেমন আছো?", "আমাকে একটা সিগারেট দেও বলছি", "চুপ থাকো, চারদিকে ষড়যন্ত্র চলছে!"]
+                    }
+                ]
+            },
+            lover: {
+                title: "মজনু / লাভার",
+                icon: "fa-heart-pulse",
+                color: "from-rose-500 to-pink-700",
+                questions: [
+                    {
+                        q: "প্রেমিকার এক সেকেন্ড সিন করে রিপ্লাই না দিলে আপনার মাথায় কোন ভূত চাপে?",
+                        options: ["বিষ খেয়ে মরে যাওয়ার স্ট্যাটাস দেওয়া", "মেসেঞ্জারে একসাথে ১০০টা কল দেওয়া", "ভাবি অন্য কারও সাথে প্রেম করছে কিনা গোয়েন্দাগিরি"]
+                    }
+                ]
+            },
+            hunda: {
+                title: "হুন্ডাওয়ালা (বাইকার)",
+                icon: "fa-motorcycle",
+                color: "from-sky-600 to-blue-900",
+                questions: [
+                    {
+                        q: "সিগন্যাল পড়লে ফুটপাত দিয়ে বাইক তোলার সময় আপনার স্পিড কত থাকে?",
+                        options: ["রকেটের গতিতে পলায়ন", "হেলমেট খুলে পুলিশের সাথে খাতির জমানো", "ব্রেক ফেল করার অভিনয় করা"]
+                    }
+                ]
+            },
+            tesla: {
+                title: "বাংলা টেসলাওয়ালা (অটো)",
+                icon: "fa-bolt",
+                color: "from-yellow-500 to-amber-700",
+                questions: [
+                    {
+                        q: "ব্যাটারি চালিত অটোতে নাইট ভিশন রঙিন লাইট লাগানোর রহস্য কী?",
+                        options: ["যাত্রীদের ডিস্কো ভাইব দেওয়া", "হাইওয়েতে স্পেসশিপের মতো ওড়ার শখ", "পুলিশের চোখ ফাঁকি দেওয়া"]
+                    }
+                ]
+            },
+            van: {
+                title: "ভ্যান গাড়িওয়ালা",
+                icon: "fa-truck-ramp-box",
+                color: "from-zinc-600 to-slate-800",
+                questions: [
+                    {
+                        q: "ভাঙা মালের দামে পুরোনো ফ্রিজ কেনার পর প্রথম কোথায় চালান করেন?",
+                        options: ["লোহার দোকানে ভাঙারি হিসেবে", "নিজের ঘরে আলমারি বানিয়ে ব্যবহার করি", "রহস্যজনকভাবে উধাও হয়ে যায়"]
+                    }
+                ]
+            },
+            baby: {
+                title: "কচি শিশু",
+                icon: "fa-baby",
+                color: "from-teal-500 to-emerald-700",
+                questions: [
+                    {
+                        q: "হাতে স্মার্টফোন পেলে আপনি সবার আগে কী করেন?",
+                        options: ["বাবার পকেটের টাকা দিয়ে ইউটিউবে কার্টুন দেখি", "মোবাইল আছড়ে ভেঙে ফেলার চেষ্টা করি", "টিকটক ভিডিও বানিয়ে ভাইরাল হওয়ার চেষ্টা"]
+                    }
+                ]
+            },
+            lgbt: {
+                title: "🏳️‍🌈 LGBTQ+",
+                icon: "fa-rainbow",
+                color: "from-purple-500 via-pink-500 to-yellow-500",
+                isCustomMessage: "তুই না মুসলমান বাইনচোদ বের হ! কিরে লুইচ্চা নিজেরে গে দাবী কইরা মাইয়াগো লগে ঘুরোস তোরে চিনি রে লুচি!",
+                questions: [
+                    {
+                        q: "আপনি কি নিশ্চিতভাবে এই ক্যাটাগরি সিলেক্ট করতে চান?",
+                        options: ["হ্যাঁ, সার্টিফিকেট নিতে চাই", "অবশ্যই, পেছানোর কোনো সুযোগ নাই"]
+                    }
+                ]
+            }
+        };
+
+        let currentCategoryKey = null;
+        let currentQuestionIndex = 0;
+        let selectedUserName = "";
+
+        function initApp() {
+            const grid = document.getElementById('categoryGrid');
+            grid.innerHTML = '';
+
+            for (const [key, cat] of Object.entries(categoriesData)) {
+                grid.innerHTML += `
+                    <div onclick="selectCategory('${key}')" class="bg-slate-800 hover:bg-slate-700/80 border border-slate-700 hover:border-emerald-500/50 p-5 rounded-2xl cursor-pointer transition transform hover:-translate-y-1 shadow-lg flex flex-col items-center text-center space-y-3 group">
+                        <div class="bg-gradient-to-br ${cat.color} text-white w-14 h-14 rounded-2xl flex items-center justify-center text-xl shadow-md group-hover:scale-110 transition">
+                            <i class="fa-solid ${cat.icon}"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-100 group-hover:text-emerald-400 transition">${cat.title}</h3>
+                        <p class="text-[11px] text-slate-400">ফানি টেস্ট ও সার্টিফিকেট</p>
+                    </div>
+                `;
+            }
+        }
+
+        function selectCategory(key) {
+            currentCategoryKey = key;
+            currentQuestionIndex = 0;
+            document.getElementById('categorySection').classList.add('hidden');
+            document.getElementById('quizSection').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const cat = categoriesData[currentCategoryKey];
+            const qData = cat.questions[currentQuestionIndex];
+
+            document.getElementById('quizProgress').innerText = `প্রশ্ন ${currentQuestionIndex + 1} / ${cat.questions.length}`;
+
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <h3 class="text-lg md:text-xl font-bold text-slate-100 mb-6">${qData.q}</h3>
+                <div class="space-y-3">
+                    ${qData.options.map((opt, idx) => `
+                        <button onclick="nextQuestion()" class="w-full text-left bg-slate-900 hover:bg-emerald-900/40 border border-slate-700 hover:border-emerald-500 p-4 rounded-xl text-sm md:text-base transition flex items-center justify-between group">
+                            <span>${opt}</span>
+                            <i class="fa-regular fa-circle text-slate-600 group-hover:text-emerald-400"></i>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function nextQuestion() {
+            const cat = categoriesData[currentCategoryKey];
+            currentQuestionIndex++;
+            if (currentQuestionIndex < cat.questions.length) {
+                renderQuestion();
+            } else {
+                document.getElementById('quizSection').classList.add('hidden');
+                document.getElementById('nameModal').classList.remove('hidden');
+            }
+        }
+
+        function generateCertificateFinal() {
+            const inputVal = document.getElementById('inputUserName').value.trim();
+            selectedUserName = inputVal !== "" ? inputVal : "অজ্ঞাত ভিক্টিম";
+
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+
+            const cat = categoriesData[currentCategoryKey];
+
+            document.getElementById('certUserName').innerText = `জনাব/জনাবা ${selectedUserName}`;
+            document.getElementById('certCategoryTitle').innerText = `${cat.title} ক্যাটাগরিতে সফলভাবে ভিক্টিম হিসেবে সার্টিফাইড হয়েছেন।`;
+            
+            // Check if custom message exists (for LGBTQ+ special requirement)
+            if (cat.isCustomMessage) {
+                document.getElementById('certSpecialMessage').innerText = cat.isCustomMessage;
+                document.getElementById('certSpecialMessage').className = "text-rose-600 font-extrabold text-sm md:text-base";
+            } else {
+                document.getElementById('certSpecialMessage').innerText = "এই সার্টিফিকেটের কোনো আইনি বা বাস্তব ভিত্তি নেই, সম্পূর্ণ ফানি ও মিম উদ্দেশ্যে ব্যবহৃত হবে।";
+                document.getElementById('certSpecialMessage').className = "";
+            }
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('certDate').innerText = new Date().toLocaleDateString('bn-BD', options);
+        }
+
+        function downloadCertificateImage() {
+            const card = document.getElementById('certificateCard');
+            html2canvas(card, { scale: 3, useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Mega_Troll_Certificate_${selectedUserName}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function shareOnFacebook() {
+            alert(`🎉 মারাত্মক! সার্টিফিকেট সফলভাবে ডাউনলোড হয়েছে। এবার ফেসবুক গ্রুপে শেয়ার করে আগুন লাগিয়ে দিন!`);
+        }
+
+        function resetApp() {
+            document.getElementById('categorySection').classList.remove('hidden');
+            document.getElementById('quizSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('inputUserName').value = '';
+            currentCategoryKey = null;
+            currentQuestionIndex = 0;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
